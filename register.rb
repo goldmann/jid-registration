@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 require 'sinatra/flash'
 require 'sinatra/config_file'
