@@ -25,8 +25,14 @@
     div.flash.info {
       background-color: #008100;
     }
+
+    .pure-form-aligned label.hint {
+      width: 20em;
+      text-align: left;
+      color: #bbb;
+    }
   %body
-    %div{ :style=>"width: 500px; margin-left: auto; margin-right: auto; margin-top: 100px;" }
+    %div{ :style=>"width: 600px; margin-left: auto; margin-right: auto; margin-top: 100px;" }
       %img{:src => "logo.png"}   
       %p Formularz umożliwiający rejestrację konta na serwerze <a href="http://www.jid.pl/">XMPP jid.pl</a>
       %p= styled_flash
@@ -35,6 +41,7 @@
           %div.pure-control-group
             %label{:for => "username"} Nazwa użytkownika
             %input{:type => "text", :id => "username", :name => "username", :required => "required", :autofocus => "autofocus"}
+            %label.hint{:for => "username"} @jid.pl
           %div.pure-control-group
             %label{:for => "password"} Hasło
             %input{:type => "password", :id => "password", :name => "password", :required => "required", :autocomplete => "off"}
@@ -44,6 +51,7 @@
           %div.pure-control-group
             %label{:for => "email"} Email
             %input{:type => "email", :id => "email", :name => "email"}
+            %label.hint{:for => "email"} Opcjonalne
           %div.pure-controls
             = recaptcha_tag :ajax, :display => { :theme => 'clean'}
             %input{:type => "submit", :value => "Zarejestruj!", :class => "pure-button pure-button-primary", :style => "margin-top: 20px;"}
