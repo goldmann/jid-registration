@@ -6,13 +6,13 @@ require 'haml'
 require 'rack/recaptcha'
 require 'rest_client'
 
-config_file 'config.yml'
-
 configure do
   set :server, 'thin'
-  #set :environment, :production
+  # set :environment, :production
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :session_secret, settings.session_secret
+
+  config_file 'config.yml'
 
   use Rack::Recaptcha, :public_key => settings.recaptcha['public_key'], :private_key => settings.recaptcha['private_key']
 
@@ -29,7 +29,7 @@ configure do
 end
 
 before do
-    logger.level = 0
+  logger.level = 0
 end
 
 def show_message(msg, options = {})
@@ -53,6 +53,8 @@ post '/register' do
   show_message(settings.messages['password_too_short']) if params[:password].length < 6
   show_message(settings.messages['password_mismatch']) unless params[:password].eql?(params[:passwordrepeat])
 
+  logger.info "Registering new user with username '#{params['username']}'..."
+
   begin
     result = RestClient.get "#{settings.url}/plugins/userService/userservice", {:params => {
         'secret' => settings.openfire_secret,
@@ -62,20 +64,19 @@ post '/register' do
         'email' => params['email']
       }
     }
-
-    logger.debug "RAW: #{result.strip}"
-
-    show_message(settings.messages['user_exists']) if result.include?('UserAlreadyExistsException')
-    show_message(settings.messages['request_not_authorized']) if result.include?('RequestNotAuthorised')
-    show_message(settings.messages['shared_group_exception']) if result.include?('SharedGroupException')
-    show_message(settings.messages['registration_disabled']) if result.include?('UserServiceDisabled')
-    show_message(settings.messages['user_registered'], :type => :info) if result.downcase.include?('<result>ok</result>')
   rescue => e
-    show_message(settings.messages['unknown_error'])
     logger.error e.backtrace.join("\n")
+    show_message(settings.messages['unknown_error'])
   end
 
-  redirect "/"
+  logger.debug "RAW: #{result.strip}"
+
+  show_message(settings.messages['user_exists']) if result.include?('UserAlreadyExistsException')
+  show_message(settings.messages['request_not_authorized']) if result.include?('RequestNotAuthorised')
+  show_message(settings.messages['shared_group_exception']) if result.include?('SharedGroupException')
+  show_message(settings.messages['registration_disabled']) if result.include?('UserServiceDisabled')
+  show_message(settings.messages['user_registered'], :type => :info) if result.downcase.include?('<result>ok</result>')
+  show_message(settings.messages['unknown_error'])
 end
 
 not_found do
