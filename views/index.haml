@@ -5,7 +5,6 @@
     %meta{ :content => "Rejestracja nowego użytkownika na serwerze XMPP jid.p", :name => "description" }
     %meta{ :content => "7 days", :name => "revisit-after" }
     %link{ :href => "/css/pure-min.css", :rel => "stylesheet" }
-    %script{:type => "text/javascript", :src => "js/bootstrap.min.js"}
   :css
     html {
       font-size: 0.9em;
@@ -53,6 +52,6 @@
             %input{:type => "email", :id => "email", :name => "email"}
             %label.hint{:for => "email"} Opcjonalne
           %div.pure-controls
-            = recaptcha_tag :ajax, :display => { :theme => 'clean'}
+            = recaptcha_tag :ajax, :display => { :theme => 'clean'}, :ssl => true
             %input{:type => "submit", :value => "Zarejestruj!", :class => "pure-button pure-button-primary", :style => "margin-top: 20px;"}
 
