@@ -2,9 +2,9 @@
 %html
   %head
     %title= "Rejestracja na serwerze jid.pl"
-    %meta{ :content => "Rejestracja nowego użytkownika na serwerze XMPP jid.p", :name => "description" }
+    %meta{ :content => "Rejestracja nowego użytkownika na serwerze XMPP jid.pl", :name => "description" }
     %meta{ :content => "7 days", :name => "revisit-after" }
-    %link{ :href => "/css/pure-min.css", :rel => "stylesheet" }
+    %link{ :href => "css/pure-min.css", :rel => "stylesheet" }
   :css
     html {
       font-size: 0.9em;
@@ -32,10 +32,11 @@
     }
   %body
     %div{ :style=>"width: 600px; margin-left: auto; margin-right: auto; margin-top: 100px;" }
-      %img{:src => "logo.png"}   
+      %a{:href => "/"}
+        %img{:src => "logo.png"}
       %p Formularz umożliwiający rejestrację konta na serwerze <a href="http://www.jid.pl/">XMPP jid.pl</a>
       %p= styled_flash
-      %form.pure-form{ :action => "/register", :method => "post", :class => "pure-form-aligned"}
+      %form.pure-form{ :action => "register", :method => "post", :class => "pure-form-aligned"}
         %fieldset
           %div.pure-control-group
             %label{:for => "username"} Nazwa użytkownika
