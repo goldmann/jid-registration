@@ -11,6 +11,7 @@ configure do
   # set :environment, :production
   set :public_folder, File.dirname(__FILE__) + '/public'
   set :session_secret, settings.session_secret
+  set :protection, :origin_whitelist => ['https://secure.jid.pl']
 
   config_file 'config.yml'
 
