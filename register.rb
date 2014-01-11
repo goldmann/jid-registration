@@ -46,8 +46,8 @@ def show_message(msg, options = {})
     :redirect => true
   }.merge(options)
 
-  logger.send(options[:type], "#{msg[:log]}, from IP: #{request.ip}")
-  flash[options[:type]] = eval("\"" + msg[:message] + "\"")
+  logger.send(options[:type], "#{msg[:log].gsub('#USERNAME#', params[:username])}, from IP: #{request.ip}")
+  flash[options[:type]] = msg[:message].gsub('#USERNAME#', params[:username])
   redirect "/" if options[:redirect]
 end
 
