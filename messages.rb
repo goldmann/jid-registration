@@ -5,7 +5,7 @@ class Messages
       :empty_password => { :log => "ERR-002: Empty password", :message => "Nie podano hasła"},
       :password_too_short => { :log => "ERR-003: Password too short", :message => "Hasło jest zbyt krótkie, użyj minimum 6 znaków"},
       :password_mismatch => { :log => "ERR-004: Password do not match", :message => "Podane hasła nie zgadzają się"},
-      :user_exists => { :log => "ERR-005: User already exists", :message => "Użytkownik '#USERNAME#' już istnieje, wybierz inną nazwę"},
+      :user_exists => { :log => "ERR-005: User '#USERNAME#' already exists", :message => "Użytkownik '#USERNAME#' już istnieje, wybierz inną nazwę"},
       :request_not_authorized => { :log => "ERR-006: Request is not authorized", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
       :shared_group_exception => { :log => "ERR-007: Shared group exception", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
       :registration_disabled => { :log => "ERR-008: Registration is disabled", :message => "Rejestracja jest wyłączona - spróbuj w innym momencie"},
@@ -15,7 +15,7 @@ class Messages
 
   def self.infos
     {
-      :user_registered => { :log => "OOK-001: Bad thing happened", :message => "Konto '#USERNAME#' zostało założone"}
+      :user_registered => { :log => "OK-001: User '#USERNAME#' registered", :message => "Konto '#USERNAME#' zostało założone"}
     }
   end
 end
