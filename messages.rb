@@ -1,7 +1,7 @@
 class Messages
   def self.errors
     {
-      :invalid_captcha => { :log => "ERR-001: Invalid captcha", :message => "Niepoprawny tekst z obrazka, spróbuj jeszcze raz"},
+      :invalid_captcha => { :log => "ERR-001: Invalid captcha, username '#USERNAME#'", :message => "Niepoprawny tekst z obrazka, spróbuj jeszcze raz"},
       :empty_password => { :log => "ERR-002: Empty password", :message => "Nie podano hasła"},
       :password_too_short => { :log => "ERR-003: Password too short", :message => "Hasło jest zbyt krótkie, użyj minimum 6 znaków"},
       :password_mismatch => { :log => "ERR-004: Password do not match", :message => "Podane hasła nie zgadzają się"},
