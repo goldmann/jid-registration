@@ -5,8 +5,11 @@ require 'sinatra/config_file'
 require 'haml'
 require 'rack/recaptcha'
 require 'rest_client'
+require 'redis'
 
 require './messages'
+
+$Redis = Redis.new
 
 configure do
   set :server, 'thin'
@@ -46,8 +49,14 @@ def show_message(msg, options = {})
     :redirect => true
   }.merge(options)
 
-  logger.send(options[:type], "#{msg[:log].gsub('#USERNAME#', params[:username])}, from IP: #{request.ip}")
-  flash[options[:type]] = msg[:message].gsub('#USERNAME#', params[:username])
+  if params[:username].nil?
+    logger.send(options[:type], msg[:log])
+    flash[options[:type]] = msg[:message]
+  else
+    logger.send(options[:type], "#{msg[:log].gsub('#USERNAME#', params[:username])}, from IP: #{request.ip}")
+    flash[options[:type]] = msg[:message].gsub('#USERNAME#', params[:username])
+  end
+
   redirect "/" if options[:redirect]
 end
 
@@ -56,6 +65,17 @@ get '/' do
 end
 
 post '/register' do
+  key = "ip:#{request.ip}:request_count"
+
+  registration_count = $Redis.get(key).to_i
+
+  if registration_count > settings.registration_limit
+    show_message(Messages.errors[:limit_exceeded])
+    logger.error "Current limit value: #{registration_count}"
+    logger.error "Current ttl value: #{$Redis.ttl(key)}"
+    halt 400
+  end
+
   show_message(Messages.errors[:empty_username]) if params[:username].length == 0
   show_message(Messages.errors[:invalid_captcha]) unless recaptcha_valid?
   show_message(Messages.errors[:empty_password]) if params[:password].length == 0
@@ -84,7 +104,12 @@ post '/register' do
   show_message(Messages.errors[:request_not_authorized]) if result.include?('RequestNotAuthorised')
   show_message(Messages.errors[:shared_group_exception]) if result.include?('SharedGroupException')
   show_message(Messages.errors[:registration_disabled]) if result.include?('UserServiceDisabled')
-  show_message(Messages.infos[:user_registered], :type => :info) if result.downcase.include?('<result>ok</result>')
+
+  if result.downcase.include?('<result>ok</result>')
+    show_message(Messages.infos[:user_registered], :type => :info)
+    $Redis.set(key, registration_count + 1, :ex => settings.registration_limit_period)
+  end
+
   show_message(Messages.errors[:unknown_error])
 end
 
@@ -95,3 +120,4 @@ end
 error do
   redirect "/"
 end
+

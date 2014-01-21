@@ -10,7 +10,8 @@ class Messages
       :shared_group_exception => { :log => "ERR-007: Shared group exception", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
       :registration_disabled => { :log => "ERR-008: Registration is disabled", :message => "Rejestracja jest wyłączona - spróbuj w innym momencie"},
       :unknown_error => { :log => "ERR-009: Bad thing happened", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
-      :empty_username => { :log => "ERR-010: Empty username", :message => "Nie podano nazwy użytkownika"}
+      :empty_username => { :log => "ERR-010: Empty username", :message => "Nie podano nazwy użytkownika"},
+      :limit_exceeded => { :log => "ERR-011: Limit exceeded", :message => "Zbyt duża ilość rejestracji z wybranego adresu IP, spróbuj później"}
     }
   end
 
