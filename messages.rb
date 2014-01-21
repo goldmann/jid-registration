@@ -9,7 +9,8 @@ class Messages
       :request_not_authorized => { :log => "ERR-006: Request is not authorized", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
       :shared_group_exception => { :log => "ERR-007: Shared group exception", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
       :registration_disabled => { :log => "ERR-008: Registration is disabled", :message => "Rejestracja jest wyłączona - spróbuj w innym momencie"},
-      :unknown_error => { :log => "ERR-009: Bad thing happened", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"}
+      :unknown_error => { :log => "ERR-009: Bad thing happened", :message => "Wystąpił błąd podczas zakładania konta - w przypadku, gdy sytuacja będzie się powtarzać - skontaktuj się z administratorem"},
+      :empty_username => { :log => "ERR-010: Empty username", :message => "Nie podano nazwy użytkownika"}
     }
   end
 

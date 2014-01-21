@@ -56,6 +56,7 @@ get '/' do
 end
 
 post '/register' do
+  show_message(Messages.errors[:empty_username]) if params[:username].length == 0
   show_message(Messages.errors[:invalid_captcha]) unless recaptcha_valid?
   show_message(Messages.errors[:empty_password]) if params[:password].length == 0
   show_message(Messages.errors[:password_too_short]) if params[:password].length < 6
